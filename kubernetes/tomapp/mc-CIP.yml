@@ -5,7 +5,7 @@ metadata:
 spec:
   ports:
   - port: 11211
-    targetPort: javaspringmc-port
+    targetPort: jsmc-port
     protocol: TCP
   selector:
     app: javaspringmc 
