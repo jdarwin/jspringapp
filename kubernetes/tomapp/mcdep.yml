@@ -18,5 +18,5 @@ spec:
       - name: javaspringmc
         image: memcached
         ports:
-        - name: javaspringmc-port
+        - name: jsmc-port
           containerPort: 11211
