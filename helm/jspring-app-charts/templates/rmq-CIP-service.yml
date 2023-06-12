@@ -5,7 +5,7 @@ metadata:
 spec:
   ports:
   - port: 5672
-    targetPort: javaspringmq01-port
+    targetPort: jsmq01-port
     protocol: TCP
   selector:
     app: javaspringmq01

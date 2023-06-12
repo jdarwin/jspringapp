@@ -30,3 +30,16 @@ spec:
       - name: init-memcache
         image: busybox
         command: ['sh', '-c', 'until nslookup javaspringcache01; do echo waiting for mydb; sleep 2; done;']
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hpa-js-autoscaler
+spec:
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: javaspringapp
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50        

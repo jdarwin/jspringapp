@@ -18,7 +18,7 @@ spec:
       - name: javaspringmq01
         image: rabbitmq       # use default official image from dockerhub, no need for custom
         ports:
-        - name: javaspringmq01-port
+        - name: jsmq01-port
           containerPort: 15672
         env: 
          - name: RABBITMQ_DEFAULT_PASS

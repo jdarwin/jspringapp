@@ -5,7 +5,7 @@ metadata:
 spec:
   ports:
   - port: 3306
-    targetPort: javaspring-db-port
+    targetPort: jsdb-port
     protocol: TCP
   selector:
     app: javaspring-db
