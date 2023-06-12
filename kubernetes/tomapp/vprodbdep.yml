@@ -36,5 +36,5 @@ spec:
       volumes:
         - name: javaspringdb-data
           awsElasticBlockStore:
-            volumeID: paste-here your EBS volumeID
+            volumeID: "vol-069bea1986003d43e"
             fsType: ext4
