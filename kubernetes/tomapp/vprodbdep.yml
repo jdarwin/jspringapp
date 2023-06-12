@@ -23,7 +23,7 @@ spec:
           - mountPath: /var/lib/mysql
             name: javaspringdb-data
         ports:
-        - name: javaspringdb-port
+        - name: jsdb-port
           containerPort: 3306
         env: 
          - name: MYSQL_ROOT_PASSWORD
