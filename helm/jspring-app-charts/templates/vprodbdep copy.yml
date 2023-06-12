@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: javaspring-db
+  labels:
+    app: javaspring-db
+spec:
+  selector:
+    matchLabels:
+      app: javaspring-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: javaspring-db
+    spec:
+      containers:
+      - name: javaspring-db
+        image: myjddocker/javaspring-db:V1
+        args:
+          - "--ignore-db-dir=lost+found"
+        volumeMounts: 
+          - mountPath: /var/lib/mysql
+            name: javaspring-db-data
+        ports:
+        - name: javaspring-db-port
+          containerPort: 3306
+        env: 
+         - name: MYSQL_ROOT_PASSWORD
+           valueFrom:
+             secretKeyRef:
+               name: app-secret
+               key: db-pass
+      nodeSelector:
+        zone: us-east-2a
+      volumes:
+        - name: javaspring-db-data
+          awsElasticBlockStore:
+            volumeID: paste-here your EBS volumeID
+            fsType: ext4

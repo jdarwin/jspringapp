@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: javaspringapp
+  labels: 
+    app: javaspringapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: javaspringapp
+  template:
+    metadata:
+      labels:
+        app: javaspringapp
+    spec:
+      containers:
+      - name: javaspringapp
+        image: myjddocker/javaspring-app:V1
+        ports:
+        - name: javaspringapp-port
+          containerPort: 8080

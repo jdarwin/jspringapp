@@ -1,0 +1,627 @@
+kops create cluster \
+    --name=kube.darwinpro.live \
+    --state=s3://javaspringapp-kops-states \
+    --zones=eu-central-1a,eu-central-1b \
+    --node-count=2 \
+    --node-size=t3.small \
+    --master-size=t3.medium \
+    --dns-zone=kube.darwinpro.live \
+    --node-volume-size=8 \
+    --master-volume-size=8
+
+# Received following output:
+ubuntu@ip-172-31-36-245:~$ kops create cluster \
+    --name=kube.darwinpro.live \
+    --state=s3://javaspringapp-kops-states \
+    --zones=eu-central-1a,eu-central-1b \
+    --node-count=2 \
+    --node-size=t3.small \
+    --master-size=t3.medium \
+    --dns-zone=kube.darwinpro.live \
+    --node-volume-size=8 \
+    --master-volume-size=8
+I0611 19:14:23.756236   19657 new_cluster.go:1354] Cloud Provider ID: "aws"
+I0611 19:14:23.875053   19657 subnets.go:185] Assigned CIDR 172.20.32.0/19 to subnet eu-central-1a
+I0611 19:14:23.875219   19657 subnets.go:185] Assigned CIDR 172.20.64.0/19 to subnet eu-central-1b
+Previewing changes that will be made:
+
+I0611 19:14:31.754231   19657 executor.go:111] Tasks: 0 done / 100 total; 46 can run
+W0611 19:14:31.856377   19657 vfs_castore.go:383] CA private key was not found
+I0611 19:14:32.197959   19657 executor.go:111] Tasks: 46 done / 100 total; 21 can run
+I0611 19:14:32.518450   19657 executor.go:111] Tasks: 67 done / 100 total; 27 can run
+I0611 19:14:32.596096   19657 executor.go:111] Tasks: 94 done / 100 total; 3 can run
+I0611 19:14:32.687139   19657 executor.go:111] Tasks: 97 done / 100 total; 3 can run
+I0611 19:14:32.749450   19657 executor.go:111] Tasks: 100 done / 100 total; 0 can run
+Will create resources:
+  AutoscalingGroup/control-plane-eu-central-1a.masters.kube.darwinpro.live
+        Granularity             1Minute
+        InstanceProtection      false
+        LaunchTemplate          name:control-plane-eu-central-1a.masters.kube.darwinpro.live
+        LoadBalancers           []
+        MaxInstanceLifetime     0
+        MaxSize                 1
+        Metrics                 [GroupDesiredCapacity, GroupInServiceInstances, GroupMaxSize, GroupMinSize, GroupPendingInstances, GroupStandbyInstances, GroupTerminatingInstances, GroupTotalInstances]
+        MinSize                 1
+        Subnets                 [name:eu-central-1a.kube.darwinpro.live]
+        SuspendProcesses        []
+        Tags                    {k8s.io/role/control-plane: 1, kops.k8s.io/instancegroup: control-plane-eu-central-1a, Name: control-plane-eu-central-1a.masters.kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned, k8s.io/cluster-autoscaler/node-template/label/kops.k8s.io/kops-controller-pki: , k8s.io/cluster-autoscaler/node-template/label/node-role.kubernetes.io/control-plane: , k8s.io/cluster-autoscaler/node-template/label/node.kubernetes.io/exclude-from-external-load-balancers: , k8s.io/role/master: 1, KubernetesCluster: kube.darwinpro.live}
+        TargetGroups            []
+
+  AutoscalingGroup/nodes-eu-central-1a.kube.darwinpro.live
+        Granularity             1Minute
+        InstanceProtection      false
+        LaunchTemplate          name:nodes-eu-central-1a.kube.darwinpro.live
+        LoadBalancers           []
+        MaxInstanceLifetime     0
+        MaxSize                 1
+        Metrics                 [GroupDesiredCapacity, GroupInServiceInstances, GroupMaxSize, GroupMinSize, GroupPendingInstances, GroupStandbyInstances, GroupTerminatingInstances, GroupTotalInstances]
+        MinSize                 1
+        Subnets                 [name:eu-central-1a.kube.darwinpro.live]
+        SuspendProcesses        []
+        Tags                    {kops.k8s.io/instancegroup: nodes-eu-central-1a, Name: nodes-eu-central-1a.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned, k8s.io/cluster-autoscaler/node-template/label/node-role.kubernetes.io/node: , k8s.io/role/node: 1}
+        TargetGroups            []
+
+  AutoscalingGroup/nodes-eu-central-1b.kube.darwinpro.live
+        Granularity             1Minute
+        InstanceProtection      false
+        LaunchTemplate          name:nodes-eu-central-1b.kube.darwinpro.live
+        LoadBalancers           []
+        MaxInstanceLifetime     0
+        MaxSize                 1
+        Metrics                 [GroupDesiredCapacity, GroupInServiceInstances, GroupMaxSize, GroupMinSize, GroupPendingInstances, GroupStandbyInstances, GroupTerminatingInstances, GroupTotalInstances]
+        MinSize                 1
+        Subnets                 [name:eu-central-1b.kube.darwinpro.live]
+        SuspendProcesses        []
+        Tags                    {k8s.io/role/node: 1, kops.k8s.io/instancegroup: nodes-eu-central-1b, Name: nodes-eu-central-1b.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned, k8s.io/cluster-autoscaler/node-template/label/node-role.kubernetes.io/node: }
+        TargetGroups            []
+
+  DHCPOptions/kube.darwinpro.live
+        DomainName              eu-central-1.compute.internal
+        DomainNameServers       AmazonProvidedDNS
+        Shared                  false
+        Tags                    {kubernetes.io/cluster/kube.darwinpro.live: owned, Name: kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live}
+
+  EBSVolume/a.etcd-events.kube.darwinpro.live
+        AvailabilityZone        eu-central-1a
+        Encrypted               true
+        SizeGB                  20
+        Tags                    {k8s.io/role/control-plane: 1, k8s.io/role/master: 1, kubernetes.io/cluster/kube.darwinpro.live: owned, Name: a.etcd-events.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live, k8s.io/etcd/events: a/a}
+        VolumeIops              3000
+        VolumeThroughput        125
+        VolumeType              gp3
+
+  EBSVolume/a.etcd-main.kube.darwinpro.live
+        AvailabilityZone        eu-central-1a
+        Encrypted               true
+        SizeGB                  20
+        Tags                    {k8s.io/role/control-plane: 1, k8s.io/role/master: 1, kubernetes.io/cluster/kube.darwinpro.live: owned, Name: a.etcd-main.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live, k8s.io/etcd/main: a/a}
+        VolumeIops              3000
+        VolumeThroughput        125
+        VolumeType              gp3
+
+  IAMInstanceProfile/masters.kube.darwinpro.live
+        Tags                    {Name: masters.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned}
+        Shared                  false
+
+  IAMInstanceProfile/nodes.kube.darwinpro.live
+        Tags                    {Name: nodes.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned}
+        Shared                  false
+
+  IAMInstanceProfileRole/masters.kube.darwinpro.live
+        InstanceProfile         name:masters.kube.darwinpro.live id:masters.kube.darwinpro.live
+        Role                    name:masters.kube.darwinpro.live
+
+  IAMInstanceProfileRole/nodes.kube.darwinpro.live
+        InstanceProfile         name:nodes.kube.darwinpro.live id:nodes.kube.darwinpro.live
+        Role                    name:nodes.kube.darwinpro.live
+
+  IAMRole/masters.kube.darwinpro.live
+        Tags                    {kubernetes.io/cluster/kube.darwinpro.live: owned, Name: masters.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live}
+        ExportWithID            masters
+
+  IAMRole/nodes.kube.darwinpro.live
+        Tags                    {Name: nodes.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned}
+        ExportWithID            nodes
+
+  IAMRolePolicy/master-policyoverride
+        Role                    name:masters.kube.darwinpro.live
+        Managed                 true
+
+  IAMRolePolicy/masters.kube.darwinpro.live
+        Role                    name:masters.kube.darwinpro.live
+        Managed                 false
+
+  IAMRolePolicy/node-policyoverride
+        Role                    name:nodes.kube.darwinpro.live
+        Managed                 true
+
+  IAMRolePolicy/nodes.kube.darwinpro.live
+        Role                    name:nodes.kube.darwinpro.live
+        Managed                 false
+
+  InternetGateway/kube.darwinpro.live
+        VPC                     name:kube.darwinpro.live
+        Shared                  false
+        Tags                    {Name: kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned}
+
+  Keypair/apiserver-aggregator-ca
+        Subject                 cn=apiserver-aggregator-ca
+        Issuer
+        Type                    ca
+        LegacyFormat            false
+
+  Keypair/etcd-clients-ca
+        Subject                 cn=etcd-clients-ca
+        Issuer
+        Type                    ca
+        LegacyFormat            false
+
+  Keypair/etcd-manager-ca-events
+        Subject                 cn=etcd-manager-ca-events
+        Issuer
+        Type                    ca
+        LegacyFormat            false
+
+  Keypair/etcd-manager-ca-main
+        Subject                 cn=etcd-manager-ca-main
+        Issuer
+        Type                    ca
+        LegacyFormat            false
+
+  Keypair/etcd-peers-ca-events
+        Subject                 cn=etcd-peers-ca-events
+        Issuer
+        Type                    ca
+        LegacyFormat            false
+
+  Keypair/etcd-peers-ca-main
+        Subject                 cn=etcd-peers-ca-main
+        Issuer
+        Type                    ca
+        LegacyFormat            false
+
+  Keypair/kubernetes-ca
+        Subject                 cn=kubernetes-ca
+        Issuer
+        Type                    ca
+        LegacyFormat            false
+
+  Keypair/service-account
+        Subject                 cn=service-account
+        Issuer
+        Type                    ca
+        LegacyFormat            false
+
+  LaunchTemplate/control-plane-eu-central-1a.masters.kube.darwinpro.live
+        AssociatePublicIP       true
+        CPUCredits
+        HTTPPutResponseHopLimit 3
+        HTTPTokens              required
+        HTTPProtocolIPv6        disabled
+        IAMInstanceProfile      name:masters.kube.darwinpro.live id:masters.kube.darwinpro.live
+        ImageID                 099720109477/ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20230502
+        InstanceMonitoring      false
+        InstanceType            t3.medium
+        IPv6AddressCount        0
+        RootVolumeIops          3000
+        RootVolumeSize          8
+        RootVolumeThroughput    125
+        RootVolumeType          gp3
+        RootVolumeEncryption    true
+        RootVolumeKmsKey
+        SecurityGroups          [name:masters.kube.darwinpro.live]
+        SpotPrice
+        Tags                    {k8s.io/cluster-autoscaler/node-template/label/node-role.kubernetes.io/control-plane: , kops.k8s.io/instancegroup: control-plane-eu-central-1a, Name: control-plane-eu-central-1a.masters.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live, k8s.io/cluster-autoscaler/node-template/label/kops.k8s.io/kops-controller-pki: , k8s.io/role/control-plane: 1, kubernetes.io/cluster/kube.darwinpro.live: owned, k8s.io/cluster-autoscaler/node-template/label/node.kubernetes.io/exclude-from-external-load-balancers: , k8s.io/role/master: 1}
+
+  LaunchTemplate/nodes-eu-central-1a.kube.darwinpro.live
+        AssociatePublicIP       true
+        CPUCredits
+        HTTPPutResponseHopLimit 1
+        HTTPTokens              required
+        HTTPProtocolIPv6        disabled
+        IAMInstanceProfile      name:nodes.kube.darwinpro.live id:nodes.kube.darwinpro.live
+        ImageID                 099720109477/ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20230502
+        InstanceMonitoring      false
+        InstanceType            t3.small
+        IPv6AddressCount        0
+        RootVolumeIops          3000
+        RootVolumeSize          8
+        RootVolumeThroughput    125
+        RootVolumeType          gp3
+        RootVolumeEncryption    true
+        RootVolumeKmsKey
+        SecurityGroups          [name:nodes.kube.darwinpro.live]
+        SpotPrice
+        Tags                    {kops.k8s.io/instancegroup: nodes-eu-central-1a, Name: nodes-eu-central-1a.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned, k8s.io/cluster-autoscaler/node-template/label/node-role.kubernetes.io/node: , k8s.io/role/node: 1}
+
+  LaunchTemplate/nodes-eu-central-1b.kube.darwinpro.live
+        AssociatePublicIP       true
+        CPUCredits
+        HTTPPutResponseHopLimit 1
+        HTTPTokens              required
+        HTTPProtocolIPv6        disabled
+        IAMInstanceProfile      name:nodes.kube.darwinpro.live id:nodes.kube.darwinpro.live
+        ImageID                 099720109477/ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20230502
+        InstanceMonitoring      false
+        InstanceType            t3.small
+        IPv6AddressCount        0
+        RootVolumeIops          3000
+        RootVolumeSize          8
+        RootVolumeThroughput    125
+        RootVolumeType          gp3
+        RootVolumeEncryption    true
+        RootVolumeKmsKey
+        SecurityGroups          [name:nodes.kube.darwinpro.live]
+        SpotPrice
+        Tags                    {Name: nodes-eu-central-1b.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned, k8s.io/cluster-autoscaler/node-template/label/node-role.kubernetes.io/node: , k8s.io/role/node: 1, kops.k8s.io/instancegroup: nodes-eu-central-1b}
+
+  ManagedFile/cluster-completed.spec
+        Base                    s3://javaspringapp-kops-states/kube.darwinpro.live
+        Location                cluster-completed.spec
+
+  ManagedFile/etcd-cluster-spec-events
+        Base                    s3://javaspringapp-kops-states/kube.darwinpro.live/backups/etcd/events
+        Location                /control/etcd-cluster-spec
+
+  ManagedFile/etcd-cluster-spec-main
+        Base                    s3://javaspringapp-kops-states/kube.darwinpro.live/backups/etcd/main
+        Location                /control/etcd-cluster-spec
+
+  ManagedFile/kops-version.txt
+        Base                    s3://javaspringapp-kops-states/kube.darwinpro.live
+        Location                kops-version.txt
+
+  ManagedFile/kube.darwinpro.live-addons-aws-cloud-controller.addons.k8s.io-k8s-1.18
+        Location                addons/aws-cloud-controller.addons.k8s.io/k8s-1.18.yaml
+
+  ManagedFile/kube.darwinpro.live-addons-aws-ebs-csi-driver.addons.k8s.io-k8s-1.17
+        Location                addons/aws-ebs-csi-driver.addons.k8s.io/k8s-1.17.yaml
+
+  ManagedFile/kube.darwinpro.live-addons-bootstrap
+        Location                addons/bootstrap-channel.yaml
+
+  ManagedFile/kube.darwinpro.live-addons-coredns.addons.k8s.io-k8s-1.12
+        Location                addons/coredns.addons.k8s.io/k8s-1.12.yaml
+
+  ManagedFile/kube.darwinpro.live-addons-dns-controller.addons.k8s.io-k8s-1.12
+        Location                addons/dns-controller.addons.k8s.io/k8s-1.12.yaml
+
+  ManagedFile/kube.darwinpro.live-addons-kops-controller.addons.k8s.io-k8s-1.16
+        Location                addons/kops-controller.addons.k8s.io/k8s-1.16.yaml
+
+  ManagedFile/kube.darwinpro.live-addons-kubelet-api.rbac.addons.k8s.io-k8s-1.9
+        Location                addons/kubelet-api.rbac.addons.k8s.io/k8s-1.9.yaml
+
+  ManagedFile/kube.darwinpro.live-addons-limit-range.addons.k8s.io
+        Location                addons/limit-range.addons.k8s.io/v1.5.0.yaml
+
+  ManagedFile/kube.darwinpro.live-addons-networking.cilium.io-k8s-1.16
+        Location                addons/networking.cilium.io/k8s-1.16-v1.12.yaml
+
+  ManagedFile/kube.darwinpro.live-addons-storage-aws.addons.k8s.io-v1.15.0
+        Location                addons/storage-aws.addons.k8s.io/v1.15.0.yaml
+
+  ManagedFile/manifests-etcdmanager-events-control-plane-eu-central-1a
+        Location                manifests/etcd/events-control-plane-eu-central-1a.yaml
+
+  ManagedFile/manifests-etcdmanager-main-control-plane-eu-central-1a
+        Location                manifests/etcd/main-control-plane-eu-central-1a.yaml
+
+  ManagedFile/manifests-static-kube-apiserver-healthcheck
+        Location                manifests/static/kube-apiserver-healthcheck.yaml
+
+  ManagedFile/nodeupconfig-control-plane-eu-central-1a
+        Location                igconfig/control-plane/control-plane-eu-central-1a/nodeupconfig.yaml
+
+  ManagedFile/nodeupconfig-nodes-eu-central-1a
+        Location                igconfig/node/nodes-eu-central-1a/nodeupconfig.yaml
+
+  ManagedFile/nodeupconfig-nodes-eu-central-1b
+        Location                igconfig/node/nodes-eu-central-1b/nodeupconfig.yaml
+
+  Route/0.0.0.0/0
+        RouteTable              name:kube.darwinpro.live
+        CIDR                    0.0.0.0/0
+        InternetGateway         name:kube.darwinpro.live
+
+  Route/::/0
+        RouteTable              name:kube.darwinpro.live
+        IPv6CIDR                ::/0
+        InternetGateway         name:kube.darwinpro.live
+
+  RouteTable/kube.darwinpro.live
+        VPC                     name:kube.darwinpro.live
+        Shared                  false
+        Tags                    {kubernetes.io/cluster/kube.darwinpro.live: owned, kubernetes.io/kops/role: public, Name: kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live}
+
+  RouteTableAssociation/eu-central-1a.kube.darwinpro.live
+        RouteTable              name:kube.darwinpro.live
+        Subnet                  name:eu-central-1a.kube.darwinpro.live
+
+  RouteTableAssociation/eu-central-1b.kube.darwinpro.live
+        RouteTable              name:kube.darwinpro.live
+        Subnet                  name:eu-central-1b.kube.darwinpro.live
+
+  Secret/admin
+
+  Secret/kube
+
+  Secret/kube-proxy
+
+  Secret/kubelet
+
+  Secret/system:controller_manager
+
+  Secret/system:dns
+
+  Secret/system:logging
+
+  Secret/system:monitoring
+
+  Secret/system:scheduler
+
+  SecurityGroup/masters.kube.darwinpro.live
+        Description             Security group for masters
+        VPC                     name:kube.darwinpro.live
+        RemoveExtraRules        [port=22, port=443, port=2380, port=2381, port=4001, port=4002, port=4789, port=179, port=8443]
+        Tags                    {Name: masters.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned}
+
+  SecurityGroup/nodes.kube.darwinpro.live
+        Description             Security group for nodes
+        VPC                     name:kube.darwinpro.live
+        RemoveExtraRules        [port=22]
+        Tags                    {kubernetes.io/cluster/kube.darwinpro.live: owned, Name: nodes.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live}
+
+  SecurityGroupRule/from-0.0.0.0/0-ingress-tcp-22to22-masters.kube.darwinpro.live
+        SecurityGroup           name:masters.kube.darwinpro.live
+        CIDR                    0.0.0.0/0
+        Protocol                tcp
+        FromPort                22
+        ToPort                  22
+        Tags                    {Name: from-0.0.0.0/0-ingress-tcp-22to22-masters.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned}
+
+  SecurityGroupRule/from-0.0.0.0/0-ingress-tcp-22to22-nodes.kube.darwinpro.live
+        SecurityGroup           name:nodes.kube.darwinpro.live
+        CIDR                    0.0.0.0/0
+        Protocol                tcp
+        FromPort                22
+        ToPort                  22
+        Tags                    {kubernetes.io/cluster/kube.darwinpro.live: owned, Name: from-0.0.0.0/0-ingress-tcp-22to22-nodes.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live}
+
+  SecurityGroupRule/from-0.0.0.0/0-ingress-tcp-443to443-masters.kube.darwinpro.live
+        SecurityGroup           name:masters.kube.darwinpro.live
+        CIDR                    0.0.0.0/0
+        Protocol                tcp
+        FromPort                443
+        ToPort                  443
+        Tags                    {Name: from-0.0.0.0/0-ingress-tcp-443to443-masters.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned}
+
+  SecurityGroupRule/from-::/0-ingress-tcp-22to22-masters.kube.darwinpro.live
+        SecurityGroup           name:masters.kube.darwinpro.live
+        IPv6CIDR                ::/0
+        Protocol                tcp
+        FromPort                22
+        ToPort                  22
+        Tags                    {KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned, Name: from-::/0-ingress-tcp-22to22-masters.kube.darwinpro.live}
+
+  SecurityGroupRule/from-::/0-ingress-tcp-22to22-nodes.kube.darwinpro.live
+        SecurityGroup           name:nodes.kube.darwinpro.live
+        IPv6CIDR                ::/0
+        Protocol                tcp
+        FromPort                22
+        ToPort                  22
+        Tags                    {kubernetes.io/cluster/kube.darwinpro.live: owned, Name: from-::/0-ingress-tcp-22to22-nodes.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live}
+
+  SecurityGroupRule/from-::/0-ingress-tcp-443to443-masters.kube.darwinpro.live
+        SecurityGroup           name:masters.kube.darwinpro.live
+        IPv6CIDR                ::/0
+        Protocol                tcp
+        FromPort                443
+        ToPort                  443
+        Tags                    {KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned, Name: from-::/0-ingress-tcp-443to443-masters.kube.darwinpro.live}
+
+  SecurityGroupRule/from-masters.kube.darwinpro.live-egress-all-0to0-0.0.0.0/0
+        SecurityGroup           name:masters.kube.darwinpro.live
+        CIDR                    0.0.0.0/0
+        Egress                  true
+        Tags                    {Name: from-masters.kube.darwinpro.live-egress-all-0to0-0.0.0.0/0, KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned}
+
+  SecurityGroupRule/from-masters.kube.darwinpro.live-egress-all-0to0-::/0
+        SecurityGroup           name:masters.kube.darwinpro.live
+        IPv6CIDR                ::/0
+        Egress                  true
+        Tags                    {Name: from-masters.kube.darwinpro.live-egress-all-0to0-::/0, KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned}
+
+  SecurityGroupRule/from-masters.kube.darwinpro.live-ingress-all-0to0-masters.kube.darwinpro.live
+        SecurityGroup           name:masters.kube.darwinpro.live
+        SourceGroup             name:masters.kube.darwinpro.live
+        Tags                    {Name: from-masters.kube.darwinpro.live-ingress-all-0to0-masters.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned}
+
+  SecurityGroupRule/from-masters.kube.darwinpro.live-ingress-all-0to0-nodes.kube.darwinpro.live
+        SecurityGroup           name:nodes.kube.darwinpro.live
+        SourceGroup             name:masters.kube.darwinpro.live
+        Tags                    {Name: from-masters.kube.darwinpro.live-ingress-all-0to0-nodes.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned}
+
+  SecurityGroupRule/from-nodes.kube.darwinpro.live-egress-all-0to0-0.0.0.0/0
+        SecurityGroup           name:nodes.kube.darwinpro.live
+        CIDR                    0.0.0.0/0
+        Egress                  true
+        Tags                    {KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned, Name: from-nodes.kube.darwinpro.live-egress-all-0to0-0.0.0.0/0}
+
+  SecurityGroupRule/from-nodes.kube.darwinpro.live-egress-all-0to0-::/0
+        SecurityGroup           name:nodes.kube.darwinpro.live
+        IPv6CIDR                ::/0
+        Egress                  true
+        Tags                    {Name: from-nodes.kube.darwinpro.live-egress-all-0to0-::/0, KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned}
+
+  SecurityGroupRule/from-nodes.kube.darwinpro.live-ingress-all-0to0-nodes.kube.darwinpro.live
+        SecurityGroup           name:nodes.kube.darwinpro.live
+        SourceGroup             name:nodes.kube.darwinpro.live
+        Tags                    {Name: from-nodes.kube.darwinpro.live-ingress-all-0to0-nodes.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned}
+
+  SecurityGroupRule/from-nodes.kube.darwinpro.live-ingress-tcp-1to2379-masters.kube.darwinpro.live
+        SecurityGroup           name:masters.kube.darwinpro.live
+        Protocol                tcp
+        FromPort                1
+        ToPort                  2379
+        SourceGroup             name:nodes.kube.darwinpro.live
+        Tags                    {kubernetes.io/cluster/kube.darwinpro.live: owned, Name: from-nodes.kube.darwinpro.live-ingress-tcp-1to2379-masters.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live}
+
+  SecurityGroupRule/from-nodes.kube.darwinpro.live-ingress-tcp-2382to4000-masters.kube.darwinpro.live
+        SecurityGroup           name:masters.kube.darwinpro.live
+        Protocol                tcp
+        FromPort                2382
+        ToPort                  4000
+        SourceGroup             name:nodes.kube.darwinpro.live
+        Tags                    {Name: from-nodes.kube.darwinpro.live-ingress-tcp-2382to4000-masters.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned}
+
+  SecurityGroupRule/from-nodes.kube.darwinpro.live-ingress-tcp-4003to65535-masters.kube.darwinpro.live
+        SecurityGroup           name:masters.kube.darwinpro.live
+        Protocol                tcp
+        FromPort                4003
+        ToPort                  65535
+        SourceGroup             name:nodes.kube.darwinpro.live
+        Tags                    {Name: from-nodes.kube.darwinpro.live-ingress-tcp-4003to65535-masters.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned}
+
+  SecurityGroupRule/from-nodes.kube.darwinpro.live-ingress-udp-1to65535-masters.kube.darwinpro.live
+        SecurityGroup           name:masters.kube.darwinpro.live
+        Protocol                udp
+        FromPort                1
+        ToPort                  65535
+        SourceGroup             name:nodes.kube.darwinpro.live
+        Tags                    {Name: from-nodes.kube.darwinpro.live-ingress-udp-1to65535-masters.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned}
+
+  Subnet/eu-central-1a.kube.darwinpro.live
+        ShortName               eu-central-1a
+        VPC                     name:kube.darwinpro.live
+        AvailabilityZone        eu-central-1a
+        CIDR                    172.20.32.0/19
+        ResourceBasedNaming     true
+        AssignIPv6AddressOnCreation     false
+        Shared                  false
+        Tags                    {kops.k8s.io/instance-group/nodes-eu-central-1a: true, Name: eu-central-1a.kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned, SubnetType: Public, kubernetes.io/role/elb: 1, kubernetes.io/role/internal-elb: 1, kops.k8s.io/instance-group/control-plane-eu-central-1a: true}
+
+  Subnet/eu-central-1b.kube.darwinpro.live
+        ShortName               eu-central-1b
+        VPC                     name:kube.darwinpro.live
+        AvailabilityZone        eu-central-1b
+        CIDR                    172.20.64.0/19
+        ResourceBasedNaming     true
+        AssignIPv6AddressOnCreation     false
+        Shared                  false
+        Tags                    {KubernetesCluster: kube.darwinpro.live, kubernetes.io/cluster/kube.darwinpro.live: owned, SubnetType: Public, kubernetes.io/role/elb: 1, kubernetes.io/role/internal-elb: 1, kops.k8s.io/instance-group/nodes-eu-central-1b: true, Name: eu-central-1b.kube.darwinpro.live}
+
+  VPC/kube.darwinpro.live
+        CIDR                    172.20.0.0/16
+        AmazonIPv6              true
+        EnableDNSHostnames      true
+        EnableDNSSupport        true
+        Shared                  false
+        Tags                    {kubernetes.io/cluster/kube.darwinpro.live: owned, Name: kube.darwinpro.live, KubernetesCluster: kube.darwinpro.live}
+
+  VPCAmazonIPv6CIDRBlock/AmazonIPv6
+        VPC                     name:kube.darwinpro.live
+        Shared                  false
+
+  VPCDHCPOptionsAssociation/kube.darwinpro.live
+        VPC                     name:kube.darwinpro.live
+        DHCPOptions             name:kube.darwinpro.live
+
+  WarmPool/control-plane-eu-central-1a.masters.kube.darwinpro.live
+        Enabled                 false
+        MinSize                 0
+
+  WarmPool/nodes-eu-central-1a.kube.darwinpro.live
+        Enabled                 false
+        MinSize                 0
+
+  WarmPool/nodes-eu-central-1b.kube.darwinpro.live
+        Enabled                 false
+        MinSize                 0
+
+Must specify --yes to apply changes
+
+Cluster configuration has been created.
+
+Suggestions:
+ * list clusters with: kops get cluster
+ * edit this cluster with: kops edit cluster kube.darwinpro.live
+ * edit your node instance group: kops edit ig --name=kube.darwinpro.live nodes-eu-central-1a
+ * edit your control-plane instance group: kops edit ig --name=kube.darwinpro.live control-plane-eu-central-1a
+
+Finally configure your cluster with: kops update cluster --name kube.darwinpro.live --yes --admin
+
+
+Must specify --yes to apply changes
+
+Cluster configuration has been created.
+
+Suggestions:
+ * list clusters with: kops get cluster
+ * edit this cluster with: kops edit cluster kube.darwinpro.live
+ * edit your node instance group: kops edit ig --name=kube.darwinpro.live nodes-eu-central-1a
+ * edit your control-plane instance group: kops edit ig --name=kube.darwinpro.live control-plane-eu-central-1a
+
+Finally configure your cluster with: kops update cluster --name kube.darwinpro.live --yes --admin
+
+#
+kops update cluster --name kube.darwinpro.live --state=s3://javaspringapp-	kops-states --yes --admin
+
+### --- Following command will actually start creating the k8s cluster (in about 15 minutes time it's created):
+
+kops update cluster --name kube.darwinpro.live --state=s3://javaspringapp-kops-states --yes --admin
+
+Received following output:
+
+ubuntu@ip-172-31-36-245:~$ kops update cluster --name kube.darwinpro.live --state=s3://javaspringapp-kops-states --yes --admin
+I0611 19:21:30.887475   19687 executor.go:111] Tasks: 0 done / 100 total; 46 can run
+I0611 19:21:30.979550   19687 keypair.go:224] Issuing new certificate: "etcd-clients-ca"
+I0611 19:21:31.005667   19687 keypair.go:224] Issuing new certificate: "etcd-manager-ca-events"
+I0611 19:21:31.025581   19687 keypair.go:224] Issuing new certificate: "etcd-peers-ca-events"
+W0611 19:21:31.047409   19687 vfs_castore.go:383] CA private key was not found
+I0611 19:21:31.061903   19687 keypair.go:224] Issuing new certificate: "apiserver-aggregator-ca"
+I0611 19:21:31.096655   19687 keypair.go:224] Issuing new certificate: "etcd-peers-ca-main"
+I0611 19:21:31.286186   19687 keypair.go:224] Issuing new certificate: "etcd-manager-ca-main"
+I0611 19:21:31.593383   19687 keypair.go:224] Issuing new certificate: "service-account"
+W0611 19:21:31.615829   19687 vfs_castore.go:383] CA private key was not found
+I0611 19:21:31.825124   19687 keypair.go:224] Issuing new certificate: "kubernetes-ca"
+I0611 19:21:32.815693   19687 executor.go:111] Tasks: 46 done / 100 total; 21 can run
+I0611 19:21:33.577914   19687 executor.go:111] Tasks: 67 done / 100 total; 27 can run
+I0611 19:21:34.198782   19687 executor.go:111] Tasks: 94 done / 100 total; 3 can run
+I0611 19:21:35.059670   19687 executor.go:155] No progress made, sleeping before retrying 3 task(s)
+I0611 19:21:45.060642   19687 executor.go:111] Tasks: 94 done / 100 total; 3 can run
+I0611 19:21:46.195408   19687 executor.go:111] Tasks: 97 done / 100 total; 3 can run
+I0611 19:21:46.257081   19687 executor.go:111] Tasks: 100 done / 100 total; 0 can run
+I0611 19:21:47.073612   19687 dns.go:232] Pre-creating DNS records
+I0611 19:21:47.722229   19687 update_cluster.go:323] Exporting kubeconfig for cluster
+kOps has set your kubectl context to kube.darwinpro.live
+
+Cluster is starting.  It should be ready in a few minutes.
+
+Suggestions:
+ * validate cluster: kops validate cluster --wait 10m
+ * list nodes: kubectl get nodes --show-labels
+ * ssh to a control-plane node: ssh -i ~/.ssh/id_rsa ubuntu@api.kube.darwinpro.live
+ * the ubuntu user is specific to Ubuntu. If not using Ubuntu please use the appropriate user based on your OS.
+ * read about installing addons at: https://kops.sigs.k8s.io/addons.
+
+#--- validate cluster
+ubuntu@ip-172-31-36-245:~$ kops validate cluster --state=s3://javaspringapp-kops-states
+Using cluster from kubectl context: kube.darwinpro.live
+
+Validating cluster kube.darwinpro.live
+
+INSTANCE GROUPS
+NAME                            ROLE            MACHINETYPE     MIN     MAX     SUBNETS
+control-plane-eu-central-1a     ControlPlane    t3.medium       1       1       eu-central-1a
+nodes-eu-central-1a             Node            t3.small        1       1       eu-central-1a
+nodes-eu-central-1b             Node            t3.small        1       1       eu-central-1b
+
+NODE STATUS
+NAME                    ROLE            READY
+i-01a98eb28f152fc6e     node            True
+i-035971c764ff5ac1b     control-plane   True
+i-06a199d906387e76e     node            True
+
+Your cluster kube.darwinpro.live is ready
+Sucess!! JD 

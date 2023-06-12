@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: javaspringdb
+  labels:
+    app: javaspringdb
+spec:
+  selector:
+    matchLabels:
+      app: javaspringdb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: javaspringdb
+    spec:
+      containers:
+      - name: javaspringdb
+        image: myjddocker/javaspring-db:V1
+        ports:
+        - name: javaspringdb-port
+          containerPort: 3306
+        env:
+         - name: MYSQL_ROOT_PASSWORD
+           value: "javaspringdbpass"
+
