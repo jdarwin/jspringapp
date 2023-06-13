@@ -1,13 +1,13 @@
 version: "3"
 services:
   javaspring-db:
-    image: myjddocker/javaspring-db:V1
+    image: myjddocker/javaspringdb:V1
     ports:
       - "3306:3306"
     volumes:
       - javaspringdbdata:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_ROOT_PASSWORD=javaspringdbpass
   javaspringcache01:
     image: memcached
     ports:
@@ -17,16 +17,16 @@ services:
     ports:
       - "15672:15672"
     environment:
-      - RABBITMQ_DEFAULT_USER=
-      - RABBITMQ_DEFAULT_PASS=
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
   javaspringapp:
-    image: myjddocker/javaspring-app:V1
+    image: myjddocker/javaspringapp:V1
     ports:
       - "8080:8080"
     volumes:
       - javaspringappdata:/usr/local/tomcat/webapps
   javaspringweb:
-    image: myjddocker/javaspring-web:V1
+    image: myjddocker/javaspringweb:V1
     ports:
       - "80:80"
 volumes:
