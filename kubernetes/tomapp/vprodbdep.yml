@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: javaspringdb
-        image: myjddocker/javaspringdb:V1
+        image: javaspringdb:V1
         args:
           - "--ignore-db-dir=lost+found"
         volumeMounts: 
