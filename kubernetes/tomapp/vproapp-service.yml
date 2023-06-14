@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: javaspringapp-service
+  name: javaspringapp
 spec:
   ports:
   - port: 80
