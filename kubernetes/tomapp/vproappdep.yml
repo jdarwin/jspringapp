@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: javaspringapp
-        image: myjddocker/javaspringapp:V1
+        image: javaspringapp:V1
         ports:
         - name: jsapp-port
           containerPort: 8080
